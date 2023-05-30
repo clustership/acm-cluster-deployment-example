@@ -1,0 +1,32 @@
+---
+apiVersion: hive.openshift.io/v1
+kind: ClusterDeployment
+metadata:
+  annotations:
+    agentBareMetal-agentSelector/autoSelect: "false"
+    agentclusterinstalls.extensions.hive.openshift.io/location: fr-lab
+  labels:
+    cluster.open-cluster-management.io/clusterset: 'default'
+    hive.openshift.io/cluster-platform: agent-baremetal
+  name: 'bm-compact-blueprint'
+  namespace: 'bm-compact-blueprint'
+spec:
+  baseDomain: clustership.com
+  clusterInstallRef:
+    group: extensions.hive.openshift.io
+    kind: AgentClusterInstall
+    name: 'bm-compact-blueprint'
+    version: v1beta1
+  clusterName: 'bm-compact-blueprint'
+  controlPlaneConfig:
+    servingCertificates: {}
+  installed: false
+  platform:
+    agentBareMetal:
+      agentSelector:
+        matchLabels:
+          agentclusterinstalls.extensions.hive.openshift.io/location: fr-lab
+          cluster-type: compact
+          agent-install.openshift.io/bmh: bm-compact-blueprint
+  pullSecretRef:
+    name: pullsecret-cluster-bm-compact-blueprint

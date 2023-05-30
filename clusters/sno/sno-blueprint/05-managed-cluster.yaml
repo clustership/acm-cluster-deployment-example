@@ -1,0 +1,13 @@
+---
+apiVersion: cluster.open-cluster-management.io/v1
+kind: ManagedCluster
+metadata:
+  labels:
+    cloud: hybrid
+    name: sno-blueprint
+    cluster.open-cluster-management.io/clusterset: default
+    feature.open-cluster-management.io/addon-application-manager: unreachable
+  name: sno-blueprint
+spec:
+  hubAcceptsClient: true
+  leaseDurationSeconds: 60

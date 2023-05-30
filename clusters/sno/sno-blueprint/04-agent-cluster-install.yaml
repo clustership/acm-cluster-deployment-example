@@ -1,0 +1,28 @@
+---
+apiVersion: extensions.hive.openshift.io/v1beta1
+kind: AgentClusterInstall
+metadata:
+  name: sno-blueprint
+  namespace: sno-blueprint
+  labels:
+    agentclusterinstalls.extensions.hive.openshift.io/location: fr-lab
+spec:
+  clusterDeploymentRef:
+    name: sno-blueprint
+  # holdInstallation: true
+  provisionRequirements:
+    workerAgents: 0
+    controlPlaneAgents: 1
+  imageSetRef:
+    name: 'img4.11.22-x86-64-appsub'
+  # manifestConfigMapRef:
+  #   name : installation-extra-manifests
+  networking:
+    clusterNetwork:
+      - cidr: 10.128.0.0/14
+        hostPrefix: 23
+    serviceNetwork:
+      - 172.30.0.0/16
+    userManagedNetworking: true
+  # sshPublicKey: >-
+  #   ssh-rsa AAAA<CHANGE THIS>

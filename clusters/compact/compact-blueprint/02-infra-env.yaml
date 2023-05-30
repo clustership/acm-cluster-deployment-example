@@ -1,0 +1,23 @@
+apiVersion: agent-install.openshift.io/v1beta1
+kind: InfraEnv
+metadata:
+  name: bm-compact-blueprint
+  namespace: bm-compact-blueprint
+  labels:
+    agentclusterinstalls.extensions.hive.openshift.io/location: fr-lab
+    networkType: static
+spec:
+  clusterRef:
+    name: bm-compact-blueprint
+    namespace: bm-compact-blueprint
+  agentLabels:
+    agentclusterinstalls.extensions.hive.openshift.io/location: fr-lab
+    cluster-type: compact
+  cpuArchitecture: x86_64
+  ipxeScriptType: DiscoveryImageAlways
+  nmStateConfigLabelSelector:
+    matchLabels:
+      infraenvs.agent-install.openshift.io: bm-compact-blueprint
+  pullSecretRef:
+    name: pullsecret-cluster-bm-compact-blueprint
+  sshAuthorizedKey: <CHANGE ME>

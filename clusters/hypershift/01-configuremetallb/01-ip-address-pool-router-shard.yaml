@@ -1,0 +1,17 @@
+apiVersion: metallb.io/v1beta1
+kind: IPAddressPool
+metadata:
+  name: ip-addresspool-hypershift-router
+  namespace: metallb-system
+spec:
+  addresses:
+  - 172.16.1.235-172.16.1.235
+  autoAssign: true
+  serviceAllocation:
+    priority: 50
+    # namespaceSelectors:
+    #  - matchLabels:
+    #      foo: bar
+    serviceSelectors:
+      - matchExpressions:
+          - {key: router, operator: In, values: [router-hypershift-router-shard]}

@@ -1,0 +1,37 @@
+---
+apiVersion: agent-install.openshift.io/v1beta1
+kind: NMStateConfig
+metadata:
+  name: 'sno-blueprint-nmstateconfig-01'
+  namespace: 'sno-blueprint'
+  labels:
+    cluster: sno-blueprint
+    infraenvs.agent-install.openshift.io: sno-blueprint
+spec:
+  config:
+    interfaces:
+    - name: mnet0
+      type: ethernet
+      state: up
+      ethernet:
+        auto-negotiation: true
+      ipv4:
+        address:
+        - ip: 192.168.102.122
+          prefix-length: 24
+        enabled: true
+      mtu: 1500
+    routes:
+      config:
+      - destination: 0.0.0.0/0
+        next-hop-address: 192.168.102.1
+        next-hop-interface: mnet0
+    dns-resolver:
+      config:
+        server:
+        - 88.99.103.50
+        - 8.8.8.8
+        - 1.1.1.1
+  interfaces:
+  - name: mnet0
+    macAddress: 52:54:00:01:fe:09

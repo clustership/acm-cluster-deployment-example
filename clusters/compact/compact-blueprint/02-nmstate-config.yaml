@@ -1,0 +1,110 @@
+---
+apiVersion: agent-install.openshift.io/v1beta1
+kind: NMStateConfig
+metadata:
+  name: 'bm-compact-blueprint-nmstateconfig-01'
+  namespace: 'bm-compact-blueprint'
+  labels:
+    cluster: bm-compact-blueprint
+    infraenvs.agent-install.openshift.io: bm-compact-blueprint
+spec:
+  config:
+    interfaces:
+    - name: eno1
+      type: ethernet
+      state: up
+      ipv4:
+        address:
+        - ip: 172.16.1.212
+          prefix-length: 24
+        enabled: true
+      mtu: 1500
+    routes:
+      config:
+      - destination: 0.0.0.0/0
+        next-hop-address: 172.16.1.1
+        next-hop-interface: eno1
+    dns-resolver:
+      config:
+        server:
+        - 172.16.1.176
+        - 8.8.8.8
+        - 1.1.1.1
+  interfaces:
+  - name: eno1
+    macAddress: 24:6E:96:6C:2A:34
+---
+apiVersion: agent-install.openshift.io/v1beta1
+kind: NMStateConfig
+metadata:
+  name: 'bm-compact-blueprint-nmstateconfig-02'
+  namespace: 'bm-compact-blueprint'
+  labels:
+    cluster: bm-compact-blueprint
+    infraenvs.agent-install.openshift.io: bm-compact-blueprint
+spec:
+  config:
+    interfaces:
+    # - name: eno1
+    #   type: ethernet
+    #   state: down
+    - name: eno1
+      type: ethernet
+      state: up
+      ipv4:
+        address:
+        - ip: 172.16.1.213
+          prefix-length: 24
+        enabled: true
+      mtu: 1500
+    routes:
+      config:
+      - destination: 0.0.0.0/0
+        next-hop-address: 172.16.1.1
+        next-hop-interface: eno1
+    dns-resolver:
+      config:
+        server:
+        - 172.16.1.176
+        - 8.8.8.8
+        - 1.1.1.1
+  interfaces:
+  - name: eno1
+    macAddress: 24:6E:96:8E:54:98
+  # - name: eno2
+  #   macAddress: 24:6E:96:8E:54:99
+---
+apiVersion: agent-install.openshift.io/v1beta1
+kind: NMStateConfig
+metadata:
+  name: 'bm-compact-blueprint-nmstateconfig-03'
+  namespace: 'bm-compact-blueprint'
+  labels:
+    cluster: bm-compact-blueprint
+    infraenvs.agent-install.openshift.io: bm-compact-blueprint
+spec:
+  config:
+    interfaces:
+    - name: eno1
+      type: ethernet
+      state: up
+      ipv4:
+        address:
+        - ip: 172.16.1.214
+          prefix-length: 24
+        enabled: true
+      mtu: 1500
+    routes:
+      config:
+      - destination: 0.0.0.0/0
+        next-hop-address: 172.16.1.1
+        next-hop-interface: eno1
+    dns-resolver:
+      config:
+        server:
+        - 172.16.1.176
+        - 8.8.8.8
+        - 1.1.1.1
+  interfaces:
+  - name: eno1
+    macAddress: 24:6E:96:8E:4E:8C

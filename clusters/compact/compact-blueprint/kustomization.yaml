@@ -1,0 +1,23 @@
+---
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+
+#commonLabels:
+#  demo: open5gs
+
+namespace: bm-compact-blueprint
+
+resources:
+- 00-namespace.yaml
+#
+# Only use extra manifests if you need to add specific features at installation time.
+#
+# - 00-extra-manifests-cm.yaml
+- 01-bare-metal-host.yaml
+- 02-cluster-deployment.yaml
+#- 02-nmstate-config.yaml
+- 02-infra-env.yaml
+- 03-pull-secret.yaml
+- 03-agent-cluster-install.yaml
+- 03-managed-cluster.yaml
+- 04-kluster-addon-config.yaml

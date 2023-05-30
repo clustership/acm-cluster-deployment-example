@@ -1,0 +1,30 @@
+---
+apiVersion: v1
+data:
+  password: Ym9ibGVwb25nZQ==
+  username: YWRtaW4=
+kind: Secret
+metadata:
+  creationTimestamp: null
+  name: bmc-sno-blueprint
+  namespace: sno-blueprint
+---
+apiVersion: metal3.io/v1alpha1
+kind: BareMetalHost
+metadata:
+  annotations:
+    bmac.agent-install.openshift.io/hostname: sno-blueprint
+    # inspect.metal3.io: disabled
+  labels:
+    infraenvs.agent-install.openshift.io: sno-blueprint
+    cluster: sno
+  name: sno-blueprint
+  namespace: sno-blueprint
+spec:
+  automatedCleaningMode: disabled
+  bmc:
+    address: redfish-virtualmedia://172.16.1.176:8000/redfish/v1/Systems/a2d6956f-b1ec-47dc-888e-2c87a3eea6c9
+    credentialsName: bmc-sno-blueprint
+    disableCertificateVerification: true
+  bootMACAddress: 52:54:00:79:02:01
+  online: true

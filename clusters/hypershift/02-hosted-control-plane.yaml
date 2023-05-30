@@ -1,0 +1,155 @@
+# apiVersion: v1
+# kind: Namespace
+# metadata:
+#   creationTimestamp: null
+#   name: clusters
+# spec: {}
+# status: {}
+---
+apiVersion: v1
+data:
+  .dockerconfigjson: <CHANGEME-PULLSECRET>
+kind: Secret
+metadata:
+  creationTimestamp: null
+  name: bm-hypershift-01-pull-secret
+  namespace: clusters
+---
+apiVersion: hypershift.openshift.io/v1beta1
+kind: HostedCluster
+metadata:
+  creationTimestamp: null
+  name: bm-hypershift-01
+  namespace: clusters
+spec:
+  autoscaling: {}
+  controllerAvailabilityPolicy: SingleReplica
+  configuration:
+    oauth:
+      identityProviders:
+      - htpasswd:
+          fileData:
+            name: bm-hypershift-01-htpasswd
+        mappingMethod: claim
+        name: htpasswd
+        type: HTPasswd
+  dns:
+    baseDomain: clustership.com
+  etcd:
+    managed:
+      storage:
+        persistentVolume:
+          size: 4Gi
+        restoreSnapshotURL: null
+        type: PersistentVolume
+    managementType: Managed
+  fips: false
+  networking:
+    clusterNetwork:
+    - cidr: 10.132.0.0/14
+    networkType: OVNKubernetes
+    serviceNetwork:
+    - cidr: 172.31.0.0/16
+  platform:
+    agent:
+      agentNamespace: clusters-bm-hypershift-01
+    type: Agent
+  pullSecret:
+    name: bm-hypershift-01-pull-secret
+  release:
+    image: quay.io/openshift-release-dev/ocp-release:4.12.17-x86_64
+  secretEncryption:
+    aescbc:
+      activeKey:
+        name: bm-hypershift-01-etcd-encryption-key
+    type: aescbc
+  services:
+  - service: APIServer
+    servicePublishingStrategy:
+      nodePort:
+        address: api.bm-hypershift-01.clustership.com
+      type: NodePort
+  - service: OAuthServer
+    servicePublishingStrategy:
+      nodePort:
+        address: hub.bm-hypershift-01.clustership.com
+      type: NodePort
+  - service: OIDC
+    servicePublishingStrategy:
+      nodePort:
+        address: hub.bm-hypershift-01.clustership.com
+      type: None
+  - service: Konnectivity
+    servicePublishingStrategy:
+      nodePort:
+        address: hub.bm-hypershift-01.clustership.com
+      type: NodePort
+  - service: Ignition
+    servicePublishingStrategy:
+      nodePort:
+        address: hub.bm-hypershift-01.clustership.com
+      type: NodePort
+  - service: OVNSbDb
+    servicePublishingStrategy:
+      nodePort:
+        address: hub.bm-hypershift-01.clustership.com
+      type: NodePort
+  sshKey:
+    name: bm-hypershift-01-ssh-key
+status:
+  controlPlaneEndpoint:
+    host: ""
+    port: 0
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: Role
+metadata:
+  creationTimestamp: null
+  name: capi-provider-role
+  namespace: clusters-bm-hypershift-01
+rules:
+- apiGroups:
+  - agent-install.openshift.io
+  resources:
+  - agents
+  verbs:
+  - '*'
+---
+apiVersion: v1
+data:
+  key: ctAFVIYFp0nTT9cAc3hkfR/7dInuj7eaulJM0piODI0=
+kind: Secret
+metadata:
+  creationTimestamp: null
+  name: bm-hypershift-01-etcd-encryption-key
+  namespace: clusters
+type: Opaque
+---
+apiVersion: v1
+data:
+  id_rsa.pub: <CHANGEME_ID_RSA>
+kind: Secret
+metadata:
+  creationTimestamp: null
+  name: bm-hypershift-01-ssh-key
+  namespace: clusters
+---
+apiVersion: hypershift.openshift.io/v1beta1
+kind: NodePool
+metadata:
+  creationTimestamp: null
+  name: bm-hypershift-01
+  namespace: clusters
+spec:
+  clusterName: bm-hypershift-01
+  management:
+    autoRepair: false
+    upgradeType: Replace
+  nodeDrainTimeout: 0s
+  platform:
+    type: Agent
+  release:
+    image: quay.io/openshift-release-dev/ocp-release:4.12.15-x86_64
+  replicas: 0
+status:
+  replicas: 0

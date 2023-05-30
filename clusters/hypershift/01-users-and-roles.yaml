@@ -1,0 +1,30 @@
+---
+apiVersion: v1
+data:
+  htpasswd: <PUT BASE64 encoded htpasswd here>
+kind: Secret
+metadata:
+  creationTimestamp: null
+  name: bm-hypershift-01-htpasswd
+  namespace: clusters
+---
+apiVersion: user.openshift.io/v1
+kind: Group
+metadata:
+  name: cluster-admins
+users:
+- xymox
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRoleBinding
+metadata:
+  creationTimestamp: null
+  name: cluster-admins
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: cluster-admin
+subjects:
+- apiGroup: rbac.authorization.k8s.io
+  kind: Group
+  name: cluster-admins

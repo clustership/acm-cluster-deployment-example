@@ -1,0 +1,31 @@
+apiVersion: v1
+items:
+- apiVersion: operator.openshift.io/v1
+  kind: IngressController
+  metadata:
+    name: hypershift-router-shard
+    namespace: openshift-ingress-operator
+    labels:
+      hypershift.openshift.io/hosted-control-plane: clusters-bm-hypershift-01
+      ingresscontroller.operator.openshift.io/deployment-ingresscontroller: hypershift-router-shard
+  spec:
+    domain: hypershift.hubcluster-02.clustership.com
+    nodePlacement:
+      nodeSelector:
+        matchLabels:
+          node-role.kubernetes.io/worker: ""
+    namespaceSelector:
+      matchLabels:
+        hypershift.openshift.io/hosted-control-plane: "true"
+    endpointPublishingStrategy:
+      type: LoadBalancerService
+      loadBalancer:
+        dnsManagementPolicy: Unmanaged
+        scope: External
+        providerParameters:
+          type: BareMetal
+  status: {}
+kind: List
+metadata:
+  resourceVersion: ""
+  selfLink: ""

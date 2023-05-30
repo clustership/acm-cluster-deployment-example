@@ -1,0 +1,7 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+
+resources:
+- 01-namespace.yaml
+- 01-users-and-roles.yaml
+- 02-hosted-control-plane.yaml

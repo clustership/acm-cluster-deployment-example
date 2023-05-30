@@ -1,0 +1,24 @@
+---
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+
+#commonLabels:
+#  demo: open5gs
+
+resources:
+- 00-namespace.yaml
+#
+# Only use extra manifests if you need to add specific features (like workload partitioning) at installation time.
+#
+### - 00-extra-manifests-cm.yaml
+- 01-infra-env.yaml
+- 02-bare-metal-host.yaml
+#
+# User nmstate config for static network configuration (dhcp not available or specific low level network config like bonding, vlans...).
+#
+### - 02-nmstate-config.yaml
+- 03-pull-secret.yaml
+- 03-cluster-deployment.yaml
+- 04-agent-cluster-install.yaml
+- 05-managed-cluster.yaml
+- 06-klusterlet-addon-config.yaml

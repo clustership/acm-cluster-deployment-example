@@ -1,0 +1,20 @@
+apiVersion: agent-install.openshift.io/v1beta1
+kind: InfraEnv
+metadata:
+  name: sno-blueprint
+  namespace: sno-blueprint
+  labels:
+    agentclusterinstalls.extensions.hive.openshift.io/location: fr-lab
+spec:
+  clusterRef:
+    name: sno-blueprint
+    namespace: sno-blueprint
+  agentLabels:
+    agentclusterinstalls.extensions.hive.openshift.io/location: fr-lab
+  cpuArchitecture: x86_64
+  # nmStateConfigLabelSelector:
+  #   matchLabels:
+  #     infraenvs.agent-install.openshift.io: sno-blueprint/sno-blueprint
+  pullSecretRef:
+    name: pullsecret-sno-blueprint
+  sshAuthorizedKey: <SSH-KEY>
